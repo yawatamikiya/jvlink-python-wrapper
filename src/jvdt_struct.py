@@ -456,6 +456,7 @@ class SEI_RUIKEI_INFO:
 		self.__set_year = source[0:4]
 		self.__hon_syokin_total = source[4:14]
 		self.__fuka_syokin = source[14:24]
+		self.__chaku_kaisu = []
 		for i in range(6):
 			self.__chaku_kaisu.append(source[24:30])
 
@@ -719,9 +720,11 @@ class HON_ZEN_RUIKEISEI_INFO:
 		self.__chaku_kaisu_heichi = CHAKUKAISU6_INFO(source[44:80])
 		self.__chaku_kaisu_syogai = CHAKUKAISU6_INFO(source[80:116])
 
+		self.__chaku_kaisu_jyo = []
 		for i in range(20):
 			self.__chaku_kaisu_jyo.append(CHAKUKAISU6_INFO(source[116 + i * 36 :116 + i * 36 + 36]))
 
+		self.__chaku_kaisu_kyori = []
 		for i in range(6):
 			self.__chaku_kaisu_kyori.append(CHAKUKAISU6_INFO(source[836 + i * 36 :836 + i * 36 + 36]))
 
@@ -976,6 +979,7 @@ class CHAKUKAISU3_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
+		self.__chaku_kaisu = []
 		for i in range(6):
 			self.__chaku_kaisu.append(source[0:3])
 
@@ -996,6 +1000,7 @@ class CHAKUKAISU4_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
+		self.__chaku_kaisu = []
 		for i in range(6):
 			self.__chaku_kaisu.append(source[0:4])
 
@@ -1016,6 +1021,7 @@ class CHAKUKAISU5_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
+		self.__chaku_kaisu = []
 		for i in range(6):
 			self.__chaku_kaisu.append(source[0:5])
 
@@ -1036,6 +1042,7 @@ class CHAKUKAISU6_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
+		self.__chaku_kaisu = []
 		for i in range(6):
 			self.__chaku_kaisu.append(source[0:6])
 
@@ -1098,6 +1105,7 @@ class RACE_JYOKEN:
 		self.__syubetu_cd = source[0:2]
 		self.__kigo_cd = source[2:5]
 		self.__jyuryo_cd = source[5:6]
+		self.__jyoken_cd = []
 		for i in range(5):
 			self.__jyoken_cd.append(source[6:9])
 
@@ -1417,6 +1425,7 @@ class JV_TK_TOKUUMA:
 		self.__handi_date = YMD(source[644:652])
 		self.__toroku_tosu = source[652:655]
 
+		self.__toku_uma_info = []
 		for i in range(300):
 			self.__toku_uma_info.append(TOKUUMA_INFO(source[655 + i * 70 :655 + i * 70 + 70]))
 
@@ -1902,12 +1911,16 @@ class JV_RA_RACE:
 		self.__track_cd_before = source[707:709]
 		self.__course_kubun_cd = source[709:711]
 		self.__course_kubun_cd_before = source[711:713]
+		self.__honsyokin = []
 		for i in range(7):
 			self.__honsyokin.append(source[713:721])
+		self.__honsyokin_before = []
 		for i in range(5):
 			self.__honsyokin_before.append(source[769:777])
+		self.__fukasyokin = []
 		for i in range(5):
 			self.__fukasyokin.append(source[809:817])
+		self.__fukasyokin_before = []
 		for i in range(3):
 			self.__fukasyokin_before.append(source[849:857])
 		self.__hasso_time = source[873:877]
@@ -1916,6 +1929,7 @@ class JV_RA_RACE:
 		self.__syusso_tosu = source[883:885]
 		self.__nyusen_tosu = source[885:887]
 		self.__tenko_baba = TENKO_BABA_INFO(source[887:890])
+		self.__lap_time = []
 		for i in range(25):
 			self.__lap_time.append(source[890:893])
 		self.__syogai_mile_time = source[965:969]
@@ -1924,6 +1938,7 @@ class JV_RA_RACE:
 		self.__haron_time_l3 = source[975:978]
 		self.__haron_time_l4 = source[978:981]
 
+		self.__corner_info = []
 		for i in range(4):
 			self.__corner_info.append(CORNER_INFO(source[981 + i * 72 :981 + i * 72 + 72]))
 
@@ -2826,6 +2841,7 @@ class JV_SE_RACE_UMA:
 		self.__haron_time_l4 = source[387:390]
 		self.__haron_time_l3 = source[390:393]
 
+		self.__chaku_uma_info = []
 		for i in range(3):
 			self.__chaku_uma_info.append(CHAKUUMA_INFO(source[393 + i * 46 :393 + i * 46 + 46]))
 
@@ -2891,15 +2907,15 @@ class PAY_INFO2:
 	'''
 	組番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	払戻金
@@ -2929,7 +2945,7 @@ class PAY_INFO2:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:4]
+		self.__umaban = source[0:4]
 		self.__pay = source[4:13]
 		self.__ninki = source[13:16]
 
@@ -2938,15 +2954,15 @@ class PAY_INFO3:
 	'''
 	組番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	払戻金
@@ -2976,7 +2992,7 @@ class PAY_INFO3:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:6]
+		self.__umaban = source[0:6]
 		self.__pay = source[6:15]
 		self.__ninki = source[15:18]
 
@@ -2985,15 +3001,15 @@ class PAY_INFO4:
 	'''
 	組番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	払戻金
@@ -3023,7 +3039,7 @@ class PAY_INFO4:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:6]
+		self.__umaban = source[0:6]
 		self.__pay = source[6:15]
 		self.__ninki = source[15:19]
 
@@ -3295,43 +3311,58 @@ class JV_HR_PAY:
 		self.__id = RACE_ID(source[11:27])
 		self.__toroku_tosu = source[27:29]
 		self.__syusso_tosu = source[29:31]
+		self.__fuseiritu_flag = []
 		for i in range(9):
 			self.__fuseiritu_flag.append(source[31:32])
+		self.__tokubarai_flag = []
 		for i in range(9):
 			self.__tokubarai_flag.append(source[40:41])
+		self.__henkan_flag = []
 		for i in range(9):
 			self.__henkan_flag.append(source[49:50])
+		self.__henkan_uma = []
 		for i in range(28):
 			self.__henkan_uma.append(source[58:59])
+		self.__henkan_waku = []
 		for i in range(8):
 			self.__henkan_waku.append(source[86:87])
+		self.__henkan_do_waku = []
 		for i in range(8):
 			self.__henkan_do_waku.append(source[94:95])
 
+		self.__pay_tansyo = []
 		for i in range(3):
 			self.__pay_tansyo.append(PAY_INFO1(source[102 + i * 13 :102 + i * 13 + 13]))
 
+		self.__pay_fukusyo = []
 		for i in range(5):
 			self.__pay_fukusyo.append(PAY_INFO1(source[141 + i * 13 :141 + i * 13 + 13]))
 
+		self.__pay_wakuren = []
 		for i in range(3):
 			self.__pay_wakuren.append(PAY_INFO1(source[206 + i * 13 :206 + i * 13 + 13]))
 
+		self.__pay_umaren = []
 		for i in range(3):
 			self.__pay_umaren.append(PAY_INFO2(source[245 + i * 16 :245 + i * 16 + 16]))
 
+		self.__pay_wide = []
 		for i in range(7):
 			self.__pay_wide.append(PAY_INFO2(source[293 + i * 16 :293 + i * 16 + 16]))
 
+		self.__pay_reserved1 = []
 		for i in range(3):
 			self.__pay_reserved1.append(PAY_INFO2(source[405 + i * 16 :405 + i * 16 + 16]))
 
+		self.__pay_umatan = []
 		for i in range(6):
 			self.__pay_umatan.append(PAY_INFO2(source[453 + i * 16 :453 + i * 16 + 16]))
 
+		self.__pay_sanrenpuku = []
 		for i in range(3):
 			self.__pay_sanrenpuku.append(PAY_INFO3(source[549 + i * 18 :549 + i * 18 + 18]))
 
+		self.__pay_sanrentan = []
 		for i in range(6):
 			self.__pay_sanrentan.append(PAY_INFO4(source[603 + i * 19 :603 + i * 19 + 19]))
 
@@ -3389,15 +3420,15 @@ class HYO_INFO2:
 	'''
 	馬番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	票数
@@ -3427,7 +3458,7 @@ class HYO_INFO2:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:4]
+		self.__umaban = source[0:4]
 		self.__hyo = source[4:15]
 		self.__ninki = source[15:18]
 
@@ -3436,15 +3467,15 @@ class HYO_INFO3:
 	'''
 	馬番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	票数
@@ -3474,7 +3505,7 @@ class HYO_INFO3:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:6]
+		self.__umaban = source[0:6]
 		self.__hyo = source[6:17]
 		self.__ninki = source[17:20]
 
@@ -3483,15 +3514,15 @@ class HYO_INFO4:
 	'''
 	馬番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	票数
@@ -3521,7 +3552,7 @@ class HYO_INFO4:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:6]
+		self.__umaban = source[0:6]
 		self.__hyo = source[6:17]
 		self.__ninki = source[17:21]
 
@@ -3767,37 +3798,49 @@ class JV_H1_HYOSU_ZENKAKE:
 		self.__id = RACE_ID(source[11:27])
 		self.__toroku_tosu = source[27:29]
 		self.__syusso_tosu = source[29:31]
+		self.__hatubai_flag = []
 		for i in range(7):
 			self.__hatubai_flag.append(source[31:32])
 		self.__fuku_chaku_barai_key = source[38:39]
+		self.__henkan_uma = []
 		for i in range(28):
 			self.__henkan_uma.append(source[39:40])
+		self.__henkan_waku = []
 		for i in range(8):
 			self.__henkan_waku.append(source[67:68])
+		self.__henkan_do_waku = []
 		for i in range(8):
 			self.__henkan_do_waku.append(source[75:76])
 
+		self.__hyo_tansyo = []
 		for i in range(28):
 			self.__hyo_tansyo.append(HYO_INFO1(source[83 + i * 15 :83 + i * 15 + 15]))
 
+		self.__hyo_fukusyo = []
 		for i in range(28):
 			self.__hyo_fukusyo.append(HYO_INFO1(source[503 + i * 15 :503 + i * 15 + 15]))
 
+		self.__hyo_wakuren = []
 		for i in range(36):
 			self.__hyo_wakuren.append(HYO_INFO1(source[923 + i * 15 :923 + i * 15 + 15]))
 
+		self.__hyo_umaren = []
 		for i in range(153):
 			self.__hyo_umaren.append(HYO_INFO2(source[1463 + i * 18 :1463 + i * 18 + 18]))
 
+		self.__hyo_wide = []
 		for i in range(153):
 			self.__hyo_wide.append(HYO_INFO2(source[4217 + i * 18 :4217 + i * 18 + 18]))
 
+		self.__hyo_umatan = []
 		for i in range(306):
 			self.__hyo_umatan.append(HYO_INFO2(source[6971 + i * 18 :6971 + i * 18 + 18]))
 
+		self.__hyo_sanrenpuku = []
 		for i in range(816):
 			self.__hyo_sanrenpuku.append(HYO_INFO3(source[12479 + i * 20 :12479 + i * 20 + 20]))
 
+		self.__hyo_total = []
 		for i in range(14):
 			self.__hyo_total.append(source[28799:28810])
 		self.__crlf = source[28953:28955]
@@ -3928,12 +3971,15 @@ class JV_H6_HYOSU_SANRENTAN:
 		self.__toroku_tosu = source[27:29]
 		self.__syusso_tosu = source[29:31]
 		self.__hatubai_flag = source[31:32]
+		self.__henkan_uma = []
 		for i in range(18):
 			self.__henkan_uma.append(source[32:33])
 
+		self.__hyo_sanrentan = []
 		for i in range(4896):
 			self.__hyo_sanrentan.append(HYO_INFO4(source[50 + i * 21 :50 + i * 21 + 21]))
 
+		self.__hyo_total = []
 		for i in range(2):
 			self.__hyo_total.append(source[102866:102877])
 		self.__crlf = source[102888:102890]
@@ -4051,15 +4097,15 @@ class ODDS_WAKUREN_INFO:
 	'''
 	組番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	オッズ
@@ -4089,7 +4135,7 @@ class ODDS_WAKUREN_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:2]
+		self.__umaban = source[0:2]
 		self.__odds = source[2:7]
 		self.__ninki = source[7:9]
 
@@ -4315,12 +4361,15 @@ class JV_O1_ODDS_TANFUKUWAKU:
 		self.__wakuren_flag = source[41:42]
 		self.__fuku_chaku_barai_key = source[42:43]
 
+		self.__odds_tansyo_info = []
 		for i in range(28):
 			self.__odds_tansyo_info.append(ODDS_TANSYO_INFO(source[43 + i * 8 :43 + i * 8 + 8]))
 
+		self.__odds_fukusyo_info = []
 		for i in range(28):
 			self.__odds_fukusyo_info.append(ODDS_FUKUSYO_INFO(source[267 + i * 12 :267 + i * 12 + 12]))
 
+		self.__odds_wakuren_info = []
 		for i in range(36):
 			self.__odds_wakuren_info.append(ODDS_WAKUREN_INFO(source[603 + i * 9 :603 + i * 9 + 9]))
 
@@ -4334,15 +4383,15 @@ class ODDS_UMAREN_INFO:
 	'''
 	組番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	オッズ
@@ -4372,7 +4421,7 @@ class ODDS_UMAREN_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:4]
+		self.__umaban = source[0:4]
 		self.__odds = source[4:10]
 		self.__ninki = source[10:13]
 
@@ -4504,6 +4553,7 @@ class JV_O2_ODDS_UMAREN:
 		self.__syusso_tosu = source[37:39]
 		self.__umaren_flag = source[39:40]
 
+		self.__odds_umaren_info = []
 		for i in range(153):
 			self.__odds_umaren_info.append(ODDS_UMAREN_INFO(source[40 + i * 13 :40 + i * 13 + 13]))
 
@@ -4515,15 +4565,15 @@ class ODDS_WIDE_INFO:
 	'''
 	組番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	最低オッズ
@@ -4566,7 +4616,7 @@ class ODDS_WIDE_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:4]
+		self.__umaban = source[0:4]
 		self.__odds_low = source[4:9]
 		self.__odds_high = source[9:14]
 		self.__ninki = source[14:17]
@@ -4699,6 +4749,7 @@ class JV_O3_ODDS_WIDE:
 		self.__syusso_tosu = source[37:39]
 		self.__wide_flag = source[39:40]
 
+		self.__odds_wide_info = []
 		for i in range(153):
 			self.__odds_wide_info.append(ODDS_WIDE_INFO(source[40 + i * 17 :40 + i * 17 + 17]))
 
@@ -4710,15 +4761,15 @@ class ODDS_UMATAN_INFO:
 	'''
 	組番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	オッズ
@@ -4748,7 +4799,7 @@ class ODDS_UMATAN_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:4]
+		self.__umaban = source[0:4]
 		self.__odds = source[4:10]
 		self.__ninki = source[10:13]
 
@@ -4880,6 +4931,7 @@ class JV_O4_ODDS_UMATAN:
 		self.__syusso_tosu = source[37:39]
 		self.__umatan_flag = source[39:40]
 
+		self.__odds_umatan_info = []
 		for i in range(306):
 			self.__odds_umatan_info.append(ODDS_UMATAN_INFO(source[40 + i * 13 :40 + i * 13 + 13]))
 
@@ -4891,15 +4943,15 @@ class ODDS_SANREN_INFO:
 	'''
 	組番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	オッズ
@@ -4929,7 +4981,7 @@ class ODDS_SANREN_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:6]
+		self.__umaban = source[0:6]
 		self.__odds = source[6:12]
 		self.__ninki = source[12:15]
 
@@ -5061,6 +5113,7 @@ class JV_O5_ODDS_SANREN:
 		self.__syusso_tosu = source[37:39]
 		self.__sanrenpuku_flag = source[39:40]
 
+		self.__odds_sanren_info = []
 		for i in range(816):
 			self.__odds_sanren_info.append(ODDS_SANREN_INFO(source[40 + i * 15 :40 + i * 15 + 15]))
 
@@ -5072,15 +5125,15 @@ class ODDS_SANRENTAN_INFO:
 	'''
 	組番
 	'''
-	__kumi = bytes()
+	__umaban = bytes()
 
 	@property
-	def kumi(self):
-		return self.__kumi
+	def umaban(self):
+		return self.__umaban
 
-	@kumi.setter
-	def kumi(self, value):
-		self.__kumi = value
+	@umaban.setter
+	def umaban(self, value):
+		self.__umaban = value
 
 	'''
 	オッズ
@@ -5110,7 +5163,7 @@ class ODDS_SANRENTAN_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumi = source[0:6]
+		self.__umaban = source[0:6]
 		self.__odds = source[6:13]
 		self.__ninki = source[13:17]
 
@@ -5242,6 +5295,7 @@ class JV_O6_ODDS_SANRENTAN:
 		self.__syusso_tosu = source[37:39]
 		self.__sanrentan_flag = source[39:40]
 
+		self.__odds_sanrentan_info = []
 		for i in range(4896):
 			self.__odds_sanrentan_info.append(ODDS_SANRENTAN_INFO(source[40 + i * 17 :40 + i * 17 + 17]))
 
@@ -5808,6 +5862,7 @@ class JV_UM_UMA:
 		self.__hinsyu_cd = source[201:202]
 		self.__keiro_cd = source[202:204]
 
+		self.__ketto3_info = []
 		for i in range(14):
 			self.__ketto3_info.append(KETTO3_INFO(source[204 + i * 44 :204 + i * 44 + 44]))
 
@@ -5829,15 +5884,19 @@ class JV_UM_UMA:
 		self.__chaku_sogo = CHAKUKAISU3_INFO(source[1074:1092])
 		self.__chaku_chuo = CHAKUKAISU3_INFO(source[1092:1110])
 
+		self.__chaku_kaisu_ba = []
 		for i in range(7):
 			self.__chaku_kaisu_ba.append(CHAKUKAISU3_INFO(source[1110 + i * 18 :1110 + i * 18 + 18]))
 
+		self.__chaku_kaisu_jyotai = []
 		for i in range(12):
 			self.__chaku_kaisu_jyotai.append(CHAKUKAISU3_INFO(source[1236 + i * 18 :1236 + i * 18 + 18]))
 
+		self.__chaku_kaisu_kyori = []
 		for i in range(6):
 			self.__chaku_kaisu_kyori.append(CHAKUKAISU3_INFO(source[1452 + i * 18 :1452 + i * 18 + 18]))
 
+		self.__kyakusitu = []
 		for i in range(4):
 			self.__kyakusitu.append(source[1560:1563])
 		self.__race_count = source[1572:1575]
@@ -6315,15 +6374,19 @@ class JV_KS_KISYU:
 		self.__chokyosi_cd = source[251:256]
 		self.__chokyosi_ryakusyo = source[256:264]
 
+		self.__hatu_ki_jyo = []
 		for i in range(2):
 			self.__hatu_ki_jyo.append(HATUKIJYO_INFO(source[264 + i * 67 :264 + i * 67 + 67]))
 
+		self.__hatu_syori = []
 		for i in range(2):
 			self.__hatu_syori.append(HATUSYORI_INFO(source[398 + i * 64 :398 + i * 64 + 64]))
 
+		self.__saikin_jyusyo = []
 		for i in range(3):
 			self.__saikin_jyusyo.append(SAIKIN_JYUSYO_INFO(source[526 + i * 163 :526 + i * 163 + 163]))
 
+		self.__hon_zen_ruikei = []
 		for i in range(3):
 			self.__hon_zen_ruikei.append(HON_ZEN_RUIKEISEI_INFO(source[1015 + i * 1052 :1015 + i * 1052 + 1052]))
 
@@ -6555,9 +6618,11 @@ class JV_CH_CHOKYOSI:
 		self.__tozai_cd = source[194:195]
 		self.__syotai = source[195:215]
 
+		self.__saikin_jyusyo = []
 		for i in range(3):
 			self.__saikin_jyusyo.append(SAIKIN_JYUSYO_INFO(source[215 + i * 163 :215 + i * 163 + 163]))
 
+		self.__hon_zen_ruikei = []
 		for i in range(3):
 			self.__hon_zen_ruikei.append(HON_ZEN_RUIKEISEI_INFO(source[704 + i * 1052 :704 + i * 1052 + 1052]))
 
@@ -6692,6 +6757,7 @@ class JV_BR_BREEDER:
 		self.__breeder_name_eng = source[227:395]
 		self.__address = source[395:415]
 
+		self.__hon_ruikei = []
 		for i in range(2):
 			self.__hon_ruikei.append(SEI_RUIKEI_INFO(source[415 + i * 60 :415 + i * 60 + 60]))
 
@@ -6826,6 +6892,7 @@ class JV_BN_BANUSI:
 		self.__banusi_name_eng = source[195:295]
 		self.__fukusyoku = source[295:355]
 
+		self.__hon_ruikei = []
 		for i in range(2):
 			self.__hon_ruikei.append(SEI_RUIKEI_INFO(source[355 + i * 60 :355 + i * 60 + 60]))
 
@@ -7258,6 +7325,7 @@ class JV_SK_SANKU:
 		self.__import_year = source[34:38]
 		self.__breeder_cd = source[38:44]
 		self.__sanchi_name = source[44:64]
+		self.__hansyoku_num = []
 		for i in range(14):
 			self.__hansyoku_num.append(source[64:72])
 		self.__crlf = source[176:178]
@@ -7592,6 +7660,7 @@ class JV_RC_RECORD:
 		self.__rec_time = source[102:106]
 		self.__tenko_baba = TENKO_BABA_INFO(source[106:109])
 
+		self.__rec_uma_info = []
 		for i in range(3):
 			self.__rec_uma_info.append(RECUMA_INFO(source[109 + i * 130 :109 + i * 130 + 130]))
 
@@ -7932,6 +8001,7 @@ class JV_WH_BATAIJYU:
 		self.__id = RACE_ID(source[11:27])
 		self.__happyo_time = MDHM(source[27:35])
 
+		self.__bataijyu_info = []
 		for i in range(18):
 			self.__bataijyu_info.append(BATAIJYU_INFO(source[35 + i * 45 :35 + i * 45 + 45]))
 
@@ -8713,6 +8783,7 @@ class JV_DM_INFO:
 		self.__id = RACE_ID(source[11:27])
 		self.__make_h_m = HM(source[27:31])
 
+		self.__d_m_info = []
 		for i in range(18):
 			self.__d_m_info.append(DM_INFO(source[31 + i * 15 :31 + i * 15 + 15]))
 
@@ -8964,6 +9035,7 @@ class JV_YS_SCHEDULE:
 		self.__id = RACE_ID2(source[11:25])
 		self.__youbi_cd = source[25:26]
 
+		self.__jyusyo_info = []
 		for i in range(3):
 			self.__jyusyo_info.append(JYUSYO_INFO(source[26 + i * 118 :26 + i * 118 + 118]))
 
@@ -9493,27 +9565,35 @@ class JV_CK_UMA:
 		self.__chaku_sogo = CHAKUKAISU3_INFO(source[100:118])
 		self.__chaku_chuo = CHAKUKAISU3_INFO(source[118:136])
 
+		self.__chaku_kaisu_ba = []
 		for i in range(7):
 			self.__chaku_kaisu_ba.append(CHAKUKAISU3_INFO(source[136 + i * 18 :136 + i * 18 + 18]))
 
+		self.__chaku_kaisu_jyotai = []
 		for i in range(12):
 			self.__chaku_kaisu_jyotai.append(CHAKUKAISU3_INFO(source[262 + i * 18 :262 + i * 18 + 18]))
 
+		self.__chaku_kaisu_siba_kyori = []
 		for i in range(9):
 			self.__chaku_kaisu_siba_kyori.append(CHAKUKAISU3_INFO(source[478 + i * 18 :478 + i * 18 + 18]))
 
+		self.__chaku_kaisu_dirt_kyori = []
 		for i in range(9):
 			self.__chaku_kaisu_dirt_kyori.append(CHAKUKAISU3_INFO(source[640 + i * 18 :640 + i * 18 + 18]))
 
+		self.__chaku_kaisu_jyo_siba = []
 		for i in range(10):
 			self.__chaku_kaisu_jyo_siba.append(CHAKUKAISU3_INFO(source[802 + i * 18 :802 + i * 18 + 18]))
 
+		self.__chaku_kaisu_jyo_dirt = []
 		for i in range(10):
 			self.__chaku_kaisu_jyo_dirt.append(CHAKUKAISU3_INFO(source[982 + i * 18 :982 + i * 18 + 18]))
 
+		self.__chaku_kaisu_jyo_syogai = []
 		for i in range(10):
 			self.__chaku_kaisu_jyo_syogai.append(CHAKUKAISU3_INFO(source[1162 + i * 18 :1162 + i * 18 + 18]))
 
+		self.__kyakusitu = []
 		for i in range(4):
 			self.__kyakusitu.append(source[1342:1345])
 		self.__race_count = source[1354:1357]
@@ -9700,18 +9780,23 @@ class JV_CK_HON_RUIKEISEI_INFO:
 		self.__chaku_kaisu_dirt = CHAKUKAISU5_INFO(source[74:104])
 		self.__chaku_kaisu_syogai = CHAKUKAISU4_INFO(source[104:128])
 
+		self.__chaku_kaisu_siba_kyori = []
 		for i in range(9):
 			self.__chaku_kaisu_siba_kyori.append(CHAKUKAISU4_INFO(source[128 + i * 24 :128 + i * 24 + 24]))
 
+		self.__chaku_kaisu_dirt_kyori = []
 		for i in range(9):
 			self.__chaku_kaisu_dirt_kyori.append(CHAKUKAISU4_INFO(source[344 + i * 24 :344 + i * 24 + 24]))
 
+		self.__chaku_kaisu_jyo_siba = []
 		for i in range(10):
 			self.__chaku_kaisu_jyo_siba.append(CHAKUKAISU4_INFO(source[560 + i * 24 :560 + i * 24 + 24]))
 
+		self.__chaku_kaisu_jyo_dirt = []
 		for i in range(10):
 			self.__chaku_kaisu_jyo_dirt.append(CHAKUKAISU4_INFO(source[800 + i * 24 :800 + i * 24 + 24]))
 
+		self.__chaku_kaisu_jyo_syogai = []
 		for i in range(10):
 			self.__chaku_kaisu_jyo_syogai.append(CHAKUKAISU3_INFO(source[1040 + i * 18 :1040 + i * 18 + 18]))
 
@@ -9761,6 +9846,7 @@ class JV_CK_KISYU:
 		self.__kisyu_cd = source[0:5]
 		self.__kisyu_name = source[5:39]
 
+		self.__hon_ruikei = []
 		for i in range(2):
 			self.__hon_ruikei.append(JV_CK_HON_RUIKEISEI_INFO(source[39 + i * 1220 :39 + i * 1220 + 1220]))
 
@@ -9810,6 +9896,7 @@ class JV_CK_CHOKYOSI:
 		self.__chokyosi_cd = source[0:5]
 		self.__chokyosi_name = source[5:39]
 
+		self.__hon_ruikei = []
 		for i in range(2):
 			self.__hon_ruikei.append(JV_CK_HON_RUIKEISEI_INFO(source[39 + i * 1220 :39 + i * 1220 + 1220]))
 
@@ -9873,6 +9960,7 @@ class JV_CK_BANUSI:
 		self.__banusi_name__co = source[6:70]
 		self.__banusi_name = source[70:134]
 
+		self.__hon_ruikei = []
 		for i in range(2):
 			self.__hon_ruikei.append(SEI_RUIKEI_INFO(source[134 + i * 60 :134 + i * 60 + 60]))
 
@@ -9936,6 +10024,7 @@ class JV_CK_BREEDER:
 		self.__breeder_name__co = source[6:76]
 		self.__breeder_name = source[76:146]
 
+		self.__hon_ruikei = []
 		for i in range(2):
 			self.__hon_ruikei.append(SEI_RUIKEI_INFO(source[146 + i * 60 :146 + i * 60 + 60]))
 
@@ -10354,6 +10443,7 @@ class JV_TM_INFO:
 		self.__id = RACE_ID(source[11:27])
 		self.__make_h_m = HM(source[27:31])
 
+		self.__t_m_info = []
 		for i in range(18):
 			self.__t_m_info.append(TM_INFO(source[31 + i * 6 :31 + i * 6 + 6]))
 
@@ -10444,15 +10534,15 @@ class WF_PAY_INFO:
 	'''
 	組番
 	'''
-	__kumiban = bytes()
+	__umabanban = bytes()
 
 	@property
-	def kumiban(self):
-		return self.__kumiban
+	def umabanban(self):
+		return self.__umabanban
 
-	@kumiban.setter
-	def kumiban(self, value):
-		self.__kumiban = value
+	@umabanban.setter
+	def umabanban(self, value):
+		self.__umabanban = value
 
 	'''
 	重勝式払戻金
@@ -10482,7 +10572,7 @@ class WF_PAY_INFO:
 
 	def __init__(self, source : bytes) -> None:
 
-		self.__kumiban = source[0:10]
+		self.__umabanban = source[0:10]
 		self.__pay = source[10:19]
 		self.__tekichu__hyo = source[19:29]
 
@@ -10676,12 +10766,14 @@ class JV_WF_INFO:
 		self.__kaisai_date = YMD(source[11:19])
 		self.__reserved1 = source[19:21]
 
+		self.__w_f_race_info = []
 		for i in range(5):
 			self.__w_f_race_info.append(WF_RACE_INFO(source[21 + i * 8 :21 + i * 8 + 8]))
 
 		self.__reserved2 = source[61:67]
 		self.__hatsubai__hyo = source[67:78]
 
+		self.__w_f_yuko_hyo_info = []
 		for i in range(5):
 			self.__w_f_yuko_hyo_info.append(WF_YUKO_HYO_INFO(source[78 + i * 11 :78 + i * 11 + 11]))
 
@@ -10691,6 +10783,7 @@ class JV_WF_INFO:
 		self.__c_o_shoki = source[136:151]
 		self.__c_o_zan_daka = source[151:166]
 
+		self.__w_f_pay_info = []
 		for i in range(243):
 			self.__w_f_pay_info.append(WF_PAY_INFO(source[166 + i * 29 :166 + i * 29 + 29]))
 
