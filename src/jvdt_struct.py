@@ -458,7 +458,7 @@ class SEI_RUIKEI_INFO:
 		self.__fuka_syokin = source[14:24]
 		self.__chaku_kaisu = []
 		for i in range(6):
-			self.__chaku_kaisu.append(source[24:30])
+			self.__chaku_kaisu.append(source[24 + i * 6:24 + i * 6 + 6])
 
 class SAIKIN_JYUSYO_INFO:
 
@@ -981,7 +981,7 @@ class CHAKUKAISU3_INFO:
 
 		self.__chaku_kaisu = []
 		for i in range(6):
-			self.__chaku_kaisu.append(source[0:3])
+			self.__chaku_kaisu.append(source[0 + i * 3:0 + i * 3 + 3])
 
 class CHAKUKAISU4_INFO:
 
@@ -1002,7 +1002,7 @@ class CHAKUKAISU4_INFO:
 
 		self.__chaku_kaisu = []
 		for i in range(6):
-			self.__chaku_kaisu.append(source[0:4])
+			self.__chaku_kaisu.append(source[0 + i * 4:0 + i * 4 + 4])
 
 class CHAKUKAISU5_INFO:
 
@@ -1023,7 +1023,7 @@ class CHAKUKAISU5_INFO:
 
 		self.__chaku_kaisu = []
 		for i in range(6):
-			self.__chaku_kaisu.append(source[0:5])
+			self.__chaku_kaisu.append(source[0 + i * 5:0 + i * 5 + 5])
 
 class CHAKUKAISU6_INFO:
 
@@ -1044,7 +1044,7 @@ class CHAKUKAISU6_INFO:
 
 		self.__chaku_kaisu = []
 		for i in range(6):
-			self.__chaku_kaisu.append(source[0:6])
+			self.__chaku_kaisu.append(source[0 + i * 6:0 + i * 6 + 6])
 
 class RACE_JYOKEN:
 
@@ -1107,7 +1107,7 @@ class RACE_JYOKEN:
 		self.__jyuryo_cd = source[5:6]
 		self.__jyoken_cd = []
 		for i in range(5):
-			self.__jyoken_cd.append(source[6:9])
+			self.__jyoken_cd.append(source[6 + i * 3:6 + i * 3 + 3])
 
 class TOKUUMA_INFO:
 
@@ -1913,16 +1913,16 @@ class JV_RA_RACE:
 		self.__course_kubun_cd_before = source[711:713]
 		self.__honsyokin = []
 		for i in range(7):
-			self.__honsyokin.append(source[713:721])
+			self.__honsyokin.append(source[713 + i * 8:713 + i * 8 + 8])
 		self.__honsyokin_before = []
 		for i in range(5):
-			self.__honsyokin_before.append(source[769:777])
+			self.__honsyokin_before.append(source[769 + i * 8:769 + i * 8 + 8])
 		self.__fukasyokin = []
 		for i in range(5):
-			self.__fukasyokin.append(source[809:817])
+			self.__fukasyokin.append(source[809 + i * 8:809 + i * 8 + 8])
 		self.__fukasyokin_before = []
 		for i in range(3):
-			self.__fukasyokin_before.append(source[849:857])
+			self.__fukasyokin_before.append(source[849 + i * 8:849 + i * 8 + 8])
 		self.__hasso_time = source[873:877]
 		self.__hasso_time_before = source[877:881]
 		self.__toroku_tosu = source[881:883]
@@ -1931,7 +1931,7 @@ class JV_RA_RACE:
 		self.__tenko_baba = TENKO_BABA_INFO(source[887:890])
 		self.__lap_time = []
 		for i in range(25):
-			self.__lap_time.append(source[890:893])
+			self.__lap_time.append(source[890 + i * 3:890 + i * 3 + 3])
 		self.__syogai_mile_time = source[965:969]
 		self.__haron_time_s3 = source[969:972]
 		self.__haron_time_s4 = source[972:975]
@@ -3313,22 +3313,22 @@ class JV_HR_PAY:
 		self.__syusso_tosu = source[29:31]
 		self.__fuseiritu_flag = []
 		for i in range(9):
-			self.__fuseiritu_flag.append(source[31:32])
+			self.__fuseiritu_flag.append(source[31 + i * 1:31 + i * 1 + 1])
 		self.__tokubarai_flag = []
 		for i in range(9):
-			self.__tokubarai_flag.append(source[40:41])
+			self.__tokubarai_flag.append(source[40 + i * 1:40 + i * 1 + 1])
 		self.__henkan_flag = []
 		for i in range(9):
-			self.__henkan_flag.append(source[49:50])
+			self.__henkan_flag.append(source[49 + i * 1:49 + i * 1 + 1])
 		self.__henkan_uma = []
 		for i in range(28):
-			self.__henkan_uma.append(source[58:59])
+			self.__henkan_uma.append(source[58 + i * 1:58 + i * 1 + 1])
 		self.__henkan_waku = []
 		for i in range(8):
-			self.__henkan_waku.append(source[86:87])
+			self.__henkan_waku.append(source[86 + i * 1:86 + i * 1 + 1])
 		self.__henkan_do_waku = []
 		for i in range(8):
-			self.__henkan_do_waku.append(source[94:95])
+			self.__henkan_do_waku.append(source[94 + i * 1:94 + i * 1 + 1])
 
 		self.__pay_tansyo = []
 		for i in range(3):
@@ -3800,17 +3800,17 @@ class JV_H1_HYOSU_ZENKAKE:
 		self.__syusso_tosu = source[29:31]
 		self.__hatubai_flag = []
 		for i in range(7):
-			self.__hatubai_flag.append(source[31:32])
+			self.__hatubai_flag.append(source[31 + i * 1:31 + i * 1 + 1])
 		self.__fuku_chaku_barai_key = source[38:39]
 		self.__henkan_uma = []
 		for i in range(28):
-			self.__henkan_uma.append(source[39:40])
+			self.__henkan_uma.append(source[39 + i * 1:39 + i * 1 + 1])
 		self.__henkan_waku = []
 		for i in range(8):
-			self.__henkan_waku.append(source[67:68])
+			self.__henkan_waku.append(source[67 + i * 1:67 + i * 1 + 1])
 		self.__henkan_do_waku = []
 		for i in range(8):
-			self.__henkan_do_waku.append(source[75:76])
+			self.__henkan_do_waku.append(source[75 + i * 1:75 + i * 1 + 1])
 
 		self.__hyo_tansyo = []
 		for i in range(28):
@@ -3842,7 +3842,7 @@ class JV_H1_HYOSU_ZENKAKE:
 
 		self.__hyo_total = []
 		for i in range(14):
-			self.__hyo_total.append(source[28799:28810])
+			self.__hyo_total.append(source[28799 + i * 11:28799 + i * 11 + 11])
 		self.__crlf = source[28953:28955]
 
 class JV_H6_HYOSU_SANRENTAN:
@@ -3973,7 +3973,7 @@ class JV_H6_HYOSU_SANRENTAN:
 		self.__hatubai_flag = source[31:32]
 		self.__henkan_uma = []
 		for i in range(18):
-			self.__henkan_uma.append(source[32:33])
+			self.__henkan_uma.append(source[32 + i * 1:32 + i * 1 + 1])
 
 		self.__hyo_sanrentan = []
 		for i in range(4896):
@@ -3981,7 +3981,7 @@ class JV_H6_HYOSU_SANRENTAN:
 
 		self.__hyo_total = []
 		for i in range(2):
-			self.__hyo_total.append(source[102866:102877])
+			self.__hyo_total.append(source[102866 + i * 11:102866 + i * 11 + 11])
 		self.__crlf = source[102888:102890]
 
 class ODDS_TANSYO_INFO:
@@ -5898,7 +5898,7 @@ class JV_UM_UMA:
 
 		self.__kyakusitu = []
 		for i in range(4):
-			self.__kyakusitu.append(source[1560:1563])
+			self.__kyakusitu.append(source[1560 + i * 3:1560 + i * 3 + 3])
 		self.__race_count = source[1572:1575]
 		self.__crlf = source[1575:1577]
 
@@ -7327,7 +7327,7 @@ class JV_SK_SANKU:
 		self.__sanchi_name = source[44:64]
 		self.__hansyoku_num = []
 		for i in range(14):
-			self.__hansyoku_num.append(source[64:72])
+			self.__hansyoku_num.append(source[64 + i * 8:64 + i * 8 + 8])
 		self.__crlf = source[176:178]
 
 class RECUMA_INFO:
@@ -9595,7 +9595,7 @@ class JV_CK_UMA:
 
 		self.__kyakusitu = []
 		for i in range(4):
-			self.__kyakusitu.append(source[1342:1345])
+			self.__kyakusitu.append(source[1342 + i * 3:1342 + i * 3 + 3])
 		self.__race_count = source[1354:1357]
 
 class JV_CK_HON_RUIKEISEI_INFO:
