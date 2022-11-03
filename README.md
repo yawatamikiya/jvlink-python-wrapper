@@ -7,3 +7,5 @@ https://jra-van.jp/dlb/sdv/sdk.html
 
 JV-Data構造体についても作成しましたが  
 C#のソースを機械的に変換しただけです。
+
+JVGetsは動作が不安定なので使用不可としました。  
