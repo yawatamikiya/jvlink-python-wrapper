@@ -133,15 +133,11 @@ class JVDTLab:
         れます。
         '''
 
-        return -502, None, ""
+        # bytearrayで受ける
+        result, file_data, file_name = self._instance.JVGets(bytearray(0), sys.maxsize, "")
 
-        # 特定のファイルを読み込むことが出来ないため暫定的に使用不可とする
-
-        # # bytearrayで受ける
-        # result, file_data, file_name = self._instance.JVGets(bytearray(0), sys.maxsize, "")
-
-        # # bytesで返却する
-        # return result, bytes(file_data), file_name
+        # bytesで返却する
+        return result, bytes(file_data), file_name
 
     def JVSkip(self) -> None:
 
